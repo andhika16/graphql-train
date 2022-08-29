@@ -14,6 +14,12 @@ const ClientType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     phone: { type: GraphQLString },
+    books: {
+      type: BookType,
+      resolve: (client) => {
+        return books.find((book) => client.id == book.authorId);
+      },
+    },
   }),
 });
 const BookType = new GraphQLObjectType({
@@ -22,6 +28,13 @@ const BookType = new GraphQLObjectType({
     id: { type: GraphQLID },
     title: { type: GraphQLString },
     body: { type: GraphQLString },
+    authorId: { type: GraphQLString },
+    client: {
+      type: ClientType,
+      resolve: (book) => {
+        return clients.find((client) => client.id == book.authorId);
+      },
+    },
   }),
 });
 
