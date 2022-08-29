@@ -1,31 +1,13 @@
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
-const { buildSchema } = require("graphql");
-
+const schema = require("./schema/schema");
 const app = express();
-
-var schema = buildSchema(`
-  type Query {
-    hello: String,
-    name : String
-  }
-`);
-
-var root = {
-  hello: () => {
-    return "Hello world!";
-  },
-  name: () => {
-    return "andhika";
-  }
-};
 
 app.use(
   "/gpl",
   graphqlHTTP({
     schema,
-    rootValue: root,
-    graphiql: true
+    graphiql: true,
   })
 );
 
